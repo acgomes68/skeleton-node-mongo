@@ -5,7 +5,7 @@
 ![Badge](https://img.shields.io/badge/MongoDB-v4.0-%2347A248?style=plastic&logo=MongoDB)
 ![Badge](https://img.shields.io/badge/license-MIT-brightgreen?style=plastic)
 
-<h4 align="center"><b>skeleton-node-postgres</b> | <b>Em construção...</b></h4>
+<h4 align="center"><b>skeleton-node-mongo</b> | <b>Em construção...</b></h4>
 
 ## **skeleton-node-mongo** ##
 ### Skeleton Docker-Alpine-Node.js-Express-MongoDB ###
@@ -13,7 +13,7 @@
 ---
 
 ## **Descrição** ##
-Esse é um modelo inicial para desenvolvimento de **API's RESTful** que pode ser utilizado com **Docker** tendo como linguagem base o **Node.js** acessando uma base relacional **Postgres**. Na implementação com **Docker** é utilizada a imagem **Node.js-LTS** instalada na distribuição **GNU/Linux Alpine**.
+Esse é um modelo inicial para desenvolvimento de **API's RESTful** que pode ser utilizado com **Docker** tendo como linguagem base o **Node.js** acessando uma base não-relacional **MongoDB**. Na implementação com **Docker** é utilizada a imagem **Node.js-LTS** instalada na distribuição **GNU/Linux Alpine**.
 
 ---
 
@@ -71,7 +71,7 @@ Esse é um modelo inicial para desenvolvimento de **API's RESTful** que pode ser
 
 ### **Arquitetura** ###
 Foi desenvolvida uma arquitetura voltada para **microsserviços** com cada um deles separados em **containers Docker** que podem ser escalados mediante a demanda necessária. A estrutura básica foi desenvolvida em **Node.js com Express**, ambos responsáveis pela gestão e roteamento das requisições **HTTP usando padrão REST**.
-Foi criada uma pequena estrutura de dados relacionais com **Postgres** usando o **Sequelize** para persistência.
+Foi criada uma pequena estrutura de dados não-relacionais com **MongoDB** usando o **Mongoose** para persistência.
 
 ---
 
@@ -162,7 +162,7 @@ Considerando que todos os passos descritos acima foram realizados, abrir o termi
 $ cd ~
 
 # Realizar o clone desse projeto em um diretório local com o nome desejado, por exemplo "novo-projeto"
-$ git clone https://github.com/acgomes68/skeleton-node-postgres.git novo-projeto
+$ git clone https://github.com/acgomes68/skeleton-node-mongo.git novo-projeto
 ```
 
 Se tudo estiver OK, todos os arquivos do projeto serão baixados para o diretório /home/***seu-usuario***/**novo-projeto**, de modo que a estrutura fique como demonstrado abaixo.
@@ -255,12 +255,10 @@ APP_URL=http://localhost
 APP_PORT=3333
 APP_HOST=0.0.0.0
 
-# PostgreSQL settings
-POSTGRES_HOST=postgres
-POSTGRES_USER=postgres
-POSTGRES_PASSWD=docker
-POSTGRES_DATABASE=novo_projeto
-POSTGRES_PORT=5432
+# MongoDB settings
+MONGO_HOST=0.0.0.0
+MONGO_DATABASE=novo_projeto
+MONGO_PORT=27017
 ```
 Após isso, conforme descrito no item anterior, através do **terminal** executar:<br />
 ```
@@ -356,7 +354,7 @@ A partir desse ponto, o **projeto estará totalmente desinstalado** e somente re
 
 ## **Tecnologias** ##
 - [**Node.js**](https://nodejs.org/en/): linguagem **Javascript** padrão **ES6** voltada para o **backend** e a construção das **API's**;
-- [**Postgres**](https://www.postgresql.org/): banco de dados relacional
+- [**MongoDB**](https://www.mongodb.com/): banco de dados não-relacional que armazena os dados na forma de documentos JSON
 - [**Docker**](https://www.docker.com/): plataforma que facilita a criação e a administração de pacotes de software em ambientes isolados e padronizados;
 - [**Alpine**](https://www.alpinelinux.org/): distribuição GNU/Linux pequena, simples e segura;
 
