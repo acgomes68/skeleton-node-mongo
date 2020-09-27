@@ -3,3 +3,4 @@ node_modules
 .env
 Dockerfile
 node_modules
+data

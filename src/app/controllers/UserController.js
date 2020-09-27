@@ -1,14 +1,13 @@
-import Sequelize from 'sequelize';
 import * as Yup from 'yup';
-import User from '../models/User';
-
-const { Op } = Sequelize;
+import User from '../schemas/UserSchema';
 
 module.exports = {
     async index(req, res) {
         try {
-            const user = await User.findAll();
-            return res.json(user);
+            const user = await User.find().then(doc => {
+                res.render('index', { items: doc });
+            });
+            return user;
         } catch (error) {
             return res.status(502).json({ error });
         }
@@ -51,7 +50,7 @@ module.exports = {
                     .json({ error: 'User name already exists' });
             }
 
-            const user = await User.create({
+            const user = await User.save({
                 name,
                 email,
             });
@@ -87,7 +86,7 @@ module.exports = {
 
             if (user) {
                 const hasName = await User.findOne({
-                    where: { name, id: { [Op.ne]: id } },
+                    where: { name },
                 });
 
                 if (hasName) {
@@ -97,7 +96,7 @@ module.exports = {
                 }
 
                 const hasEmail = await User.findOne({
-                    where: { email, id: { [Op.ne]: id } },
+                    where: { email },
                 });
 
                 if (hasEmail) {

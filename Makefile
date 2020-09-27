@@ -1,4 +1,4 @@
-# Makefile for Docker NodeJS Postgres
+# Makefile for Docker Node.js MongoDB
 include .env
 
 # If the first argument is "add"...
@@ -17,7 +17,7 @@ ifeq (remove,$(firstword $(MAKECMDGOALS)))
 endif
 
 NODE_UP := $(shell docker-compose ps | grep node)
-POSTGRES_UP := $(shell docker-compose ps | grep postgres)
+MONGO_UP := $(shell docker-compose ps | grep mongo)
 
 help:
 	@echo ""
@@ -57,16 +57,15 @@ clean:
 
 create-db:
 	@make drop-db
-	@docker-compose exec postgres psql -U $(POSTGRES_USER) --command="CREATE DATABASE $(POSTGRES_DATABASE)"
+	@docker-compose exec mongo mongo $(MONGO_DATABASE) --eval 'db.createCollection("User")'
 
 drop-db:
-	@make postgres-up
-	@docker-compose exec postgres psql -U $(POSTGRES_USER) --command="DROP DATABASE IF EXISTS $(POSTGRES_DATABASE);"
+	@make mongo-up
+	@docker-compose exec mongo mongo $(MONGO_DATABASE) --eval 'db.dropDatabase()'
 
 install: init
 	@make start
 	@make create-db
-	@make migrations
 	@make seeds
 	@make test
 
@@ -76,10 +75,6 @@ lint:
 
 logs:
 	@docker-compose logs -f
-
-migrations:
-	@make node-up
-	@docker-compose exec node yarn sequelize db:migrate
 
 node-up:
 	@if [ "$(NODE_UP)" = '' ]; then\
@@ -97,18 +92,18 @@ node-down:
         docker-compose down -v node;\
 	fi;
 
-postgres-down:
-	@if [ "$(POSTGRES_UP)" = '' ]; then\
+mongo-down:
+	@if [ "$(MONGO_UP)" = '' ]; then\
 		echo "Postgres is down";\
 	else\
 		echo "Postgres is up";\
-        docker-compose down -v postgres;\
+        docker-compose down -v mongo;\
 	fi;
 
-postgres-up:
-	@if [ "$(POSTGRES_UP)" = '' ]; then\
+mongo-up:
+	@if [ "$(MONGO_UP)" = '' ]; then\
 		echo "Postgres is down";\
-		docker-compose up -d --no-deps postgres;\
+		docker-compose up -d --no-deps mongo;\
 	else\
 		echo "Postgres is up";\
 	fi;
@@ -125,7 +120,7 @@ run:
 
 seeds:
 	@make node-up
-	@docker-compose exec node yarn sequelize db:seed:all
+	@docker-compose exec mongo mongo $(MONGO_DATABASE) --eval 'db.User.insert({"name": "test user", "email": "user@test.com", "createdAt": new Date(), "updatedAt": null })'
 
 start:
 	@docker-compose up -d
