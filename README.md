@@ -171,22 +171,21 @@ Se tudo estiver OK, todos os arquivos do projeto serão baixados para o diretór
 
 ### **Árvore de diretórios** ###
 ```
-├── node_modules
+.
+├── data
 ├── public
 │   └── screenshots
+│       ├── preview-navegador-01.png
+│       └── preview-navegador-02.png
 ├── src
 │   ├── app
 │   │   ├── controllers
 │   │   │   └── UserController.js
-│   │   └── models
-│   │       └── User.js
+│   │   └── schemas
+│   │       └── UserSchema.js
 │   ├── config
 │   │   └── database.js
 │   ├── database
-│   │   ├── migrations
-│   │   │   └── 20200828092516-create-users.js
-│   │   ├── seeds
-│   │   │   └── 20200901012052-basic-user.js
 │   │   └── index.js
 │   ├── app.js
 │   ├── routes.js
@@ -200,7 +199,7 @@ Se tudo estiver OK, todos os arquivos do projeto serão baixados para o diretór
 ├── .prettierrc
 ├── .sequelizerc
 ├── docker-compose.yml
-├── Dockerfile
+├── LICENSE
 ├── Makefile
 ├── nodemon.json
 ├── package.json
@@ -312,8 +311,7 @@ Assim que o projeto é instalado, as dependências iniciais são as seguintes:
     - **cors**: autentidação no redirecionamento de domínio;
     - **dotenv**: leitura de variáveis de ambiente a partir de arquivo .env;
     - **express**: roteamento e manipulação HTTP para API REST;
-    - **pg**: apoio na utilização do Postgres;
-    - **sequelize**: persistência de dados para Postgres;
+    - **mongoose**: persistência de dados para MongoDB;
     - **youch**: tratamento de erros e exceções;
     - **yup**: validação de dados postados;
 
@@ -321,7 +319,6 @@ Assim que o projeto é instalado, as dependências iniciais são as seguintes:
     - **eslint**: formatação e validação de sintaxe;
     - **nodemon**: monitora o serviço HTTP do node;
     - **prettier**: formatação e estilização do código;
-    - **sequelize-cli**: execução de testes e migrations através da persistência com Postgres;
     - **sucrase**: adaptação do código para ES6;
 
 Mas, caso exista a necessidade de **adicionar ou remover dependências**, utilizar as opções de **atalhos de comandos** através do terminal. Como exemplo de instalação e remoção de pacote será utilizado o **socket.io**:
